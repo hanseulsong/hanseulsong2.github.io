@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이크로미터 학습 및 퀴즈 앱</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .active-tab {
+            border-bottom: 3px solid #2563eb;
+            color: #2563eb;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+
+    <!-- Header -->
+    <header class="bg-indigo-700 text-white shadow-lg p-4">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold flex items-center gap-2">
+                <span>📏</span> 마이크로미터 퀴즈 & 학습
+            </h1>
+            <p class="text-xs md:text-sm text-indigo-200">측정 및 부품 명칭 마스터</p>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="bg-white border-b border-slate-200 shadow-sm">
+        <div class="max-w-4xl mx-auto flex gap-8 px-4">
+            <button id="tab-theory-btn" onclick="switchTab('theory')" class="py-4 px-2 active-tab transition">
+                📘 핵심 이론 & 부품 명칭
+            </button>
+            <button id="tab-practice-btn" onclick="switchTab('practice')" class="py-4 px-2 text-slate-500 hover:text-indigo-600 transition">
+                🎯 실전 퀴즈 풀기
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto w-full flex-grow p-4 md:p-6">
+
+        <!-- TAB 1: THEORY -->
+        <section id="tab-theory" class="space-y-6">
+            <!-- Part Names Overview -->
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+                <h2 class="text-xl font-bold text-indigo-900 mb-3 border-b pb-2">1. 마이크로미터 주요 부품 명칭</h2>
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                    <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100">
+                        <strong class="text-indigo-900 text-base">앤빌 (Anvil)</strong>
+                        <p class="text-slate-600 mt-1">프레임 좌측 고정밀 평면으로, 측정물을 받쳐주는 고정축입니다.</p>
+                    </div>
+                    <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100">
+                        <strong class="text-indigo-900 text-base">스핀들 (Spindle)</strong>
+                        <p class="text-slate-600 mt-1">심블을 회전시키면 전후로 이동하며 측정물을 앤빌 쪽으로 압착합니다.</p>
+                    </div>
+                    <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100">
+                        <strong class="text-indigo-900 text-base">프레임 (Frame)</strong>
+                        <p class="text-slate-600 mt-1">앤빌과 슬리브를 지지하는 굳건한 U자형 골격 부품입니다.</p>
+                    </div>
+                    <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100">
+                        <strong class="text-indigo-900 text-base">클램프 / 고정바퀴 (Lock Nut)</strong>
+                        <p class="text-slate-600 mt-1">측정한 치수가 움직이지 않도록 스핀들을 고정시킵니다.</p>
+                    </div>
+                    <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100">
+                        <strong class="text-indigo-900 text-base">슬리브 (Sleeve)</strong>
+                        <p class="text-slate-600 mt-1">고정 축에 $1\text{mm}$ 및 $0.5\text{mm}$ 어미눈금이 새겨진 원통 부품입니다.</p>
+                    </div>
+                    <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100">
+                        <strong class="text-indigo-900 text-base">심블 (Thimble)</strong>
+                        <p class="text-slate-600 mt-1">회전하는 원통 부품으로, $0.01\text{mm}$ 단위의 50개 아들눈금이 새겨져 있습니다.</p>
+                    </div>
+                    <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100 md:col-span-2">
+                        <strong class="text-indigo-900 text-base">래칫 스톱 (Ratchet Stop)</strong>
+                        <p class="text-slate-600 mt-1">측정물에 일정 측정 압력 이상이 가해지면 "헛돌며 딸깍 소리"를 내어 측정 정확성을 높이고 파손을 막습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reading Guide Card -->
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100">
+                <h2 class="text-xl font-bold text-indigo-900 mb-3 border-b pb-2">2. 눈금 읽는 법</h2>
+                <div class="bg-slate-50 p-4 rounded-lg font-mono text-sm space-y-2 border border-slate-200">
+                    <p>💡 <strong>측정값</strong> = 슬리브 상단($1\text{mm}$) + 슬리브 하단($0.5\text{mm}$) + 심블($0.01\text{mm}$)</p>
+                    <p class="text-slate-600">· 심블 1회전 = $0.5\text{mm}$ 이동 (50눈금으로 분할되어 1눈금당 $0.01\text{mm}$)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: PRACTICE & QUIZ -->
+        <section id="tab-practice" class="hidden space-y-6">
+            
+            <!-- Setup Screen (Initial) -->
+            <div id="quiz-setup" class="bg-white p-8 rounded-xl shadow-md border border-slate-100 text-center max-w-lg mx-auto">
+                <h2 class="text-2xl font-bold text-indigo-950 mb-4">🎯 마이크로미터 퀴즈 설정</h2>
+                <p class="text-slate-600 mb-6 text-sm">측정값 읽기 문제와 부품 이름 맞추기 문제가 무작위로 출제됩니다.</p>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-slate-700 mb-2">풀고 싶은 문제 수를 선택하세요</label>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button onclick="setQuestionCount(5)" class="q-cnt-btn py-3 border rounded-lg font-bold hover:bg-indigo-50 hover:border-indigo-400 active:bg-indigo-100 transition" data-cnt="5">5개</button>
+                        <button onclick="setQuestionCount(10)" class="q-cnt-btn py-3 border rounded-lg font-bold hover:bg-indigo-50 hover:border-indigo-400 transition active:bg-indigo-100 border-indigo-600 bg-indigo-50 text-indigo-700" data-cnt="10">10개</button>
+                        <button onclick="setQuestionCount(15)" class="q-cnt-btn py-3 border rounded-lg font-bold hover:bg-indigo-50 hover:border-indigo-400 transition active:bg-indigo-100" data-cnt="15">15개</button>
+                        <button onclick="setQuestionCount(20)" class="q-cnt-btn py-3 border rounded-lg font-bold hover:bg-indigo-50 hover:border-indigo-400 transition active:bg-indigo-100" data-cnt="20">20개</button>
+                    </div>
+                </div>
+
+                <button onclick="startQuiz()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-lg text-lg transition shadow-md">
+                    🚀 퀴즈 시작하기
+                </button>
+            </div>
+
+            <!-- Quiz Play Screen -->
+            <div id="quiz-play" class="hidden space-y-4">
+                <!-- Status Bar -->
+                <div class="bg-white p-4 rounded-xl shadow border border-slate-100 flex justify-between items-center text-sm font-semibold">
+                    <span id="question-progress" class="text-indigo-600 font-bold">문제 1 / 10</span>
+                    <span id="score-counter" class="text-emerald-600 font-bold">점수: 0점</span>
+                </div>
+
+                <!-- Canvas Display -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-100 text-center">
+                    <h2 id="question-title" class="text-lg font-bold text-slate-800 mb-2">문제를 불러오는 중...</h2>
+                    
+                    <div class="flex justify-center my-4 bg-slate-900 p-4 rounded-lg overflow-x-auto shadow-inner">
+                        <canvas id="micrometerCanvas" width="600" height="280" class="max-w-full h-auto rounded bg-slate-900"></canvas>
+                    </div>
+
+                    <!-- Instant Feedback Message Overlay -->
+                    <div id="feedback-msg" class="hidden my-2 py-2 px-4 rounded-lg font-bold text-center text-lg transition-all"></div>
+
+                    <!-- Question Input Type 1: Measurement Input -->
+                    <div id="input-type-measurement" class="max-w-md mx-auto hidden space-y-3">
+                        <div class="flex gap-2">
+                            <input type="number" id="user-measurement-input" step="0.01" placeholder="예: 7.74" class="flex-1 px-4 py-3 border border-slate-300 rounded-lg text-lg text-center font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <span class="flex items-center text-slate-600 font-bold text-lg">mm</span>
+                            <button onclick="checkMeasurementAnswer()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-lg transition shadow-md">
+                                제출
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question Input Type 2: Part Name Selection (Multiple Choice) -->
+                    <div id="input-type-partname" class="max-w-md mx-auto hidden grid grid-cols-2 gap-3">
+                        <!-- Dynamic Buttons generated here -->
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div id="quiz-result" class="hidden bg-white p-8 rounded-xl shadow-md border border-slate-100 text-center max-w-lg mx-auto space-y-6">
+                <div class="text-5xl">🏆</div>
+                <h2 class="text-2xl font-bold text-slate-800">퀴즈 완료!</h2>
+                
+                <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 space-y-2">
+                    <p class="text-slate-600 text-sm">최종 성적</p>
+                    <p id="final-score" class="text-4xl font-extrabold text-indigo-600">0 / 10</p>
+                    <p id="final-accuracy" class="text-sm font-semibold text-slate-500">정답률: 0%</p>
+                </div>
+
+                <button onclick="resetQuizSetup()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-lg transition">
+                    🔄 다시 도전하기
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-400 text-center py-4 text-sm mt-8">
+        마이크로미터 학습 및 측정 실습 웹 애플리케이션
+    </footer>
+
+    <script>
+        // App State
+        let selectedTotalQuestions = 10;
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let isAnswerSubmitted = false;
+
+        // Current Question Data
+        let currentQuestion = null; // { type: 'measurement'|'part', value: ..., partName: ... }
+
+        // Parts Metadata for Quiz
+        const PARTS_LIST = [
+            { name: "앤빌 (Anvil)", key: "anvil" },
+            { name: "스핀들 (Spindle)", key: "spindle" },
+            { name: "프레임 (Frame)", key: "frame" },
+            { name: "슬리브 (Sleeve)", key: "sleeve" },
+            { name: "심블 (Thimble)", key: "thimble" },
+            { name: "래칫 스톱 (Ratchet Stop)", key: "ratchet" }
+        ];
+
+        // Canvas Setup
+        const canvas = document.getElementById('micrometerCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Tab Switching
+        function switchTab(tab) {
+            const theoryTab = document.getElementById('tab-theory');
+            const practiceTab = document.getElementById('tab-practice');
+            const theoryBtn = document.getElementById('tab-theory-btn');
+            const practiceBtn = document.getElementById('tab-practice-btn');
+
+            if (tab === 'theory') {
+                theoryTab.classList.remove('hidden');
+                practiceTab.classList.add('hidden');
+                theoryBtn.classList.add('active-tab');
+                theoryBtn.classList.remove('text-slate-500');
+                practiceBtn.classList.remove('active-tab');
+                practiceBtn.classList.add('text-slate-500');
+            } else {
+                theoryTab.classList.add('hidden');
+                practiceTab.classList.remove('hidden');
+                practiceBtn.classList.add('active-tab');
+                practiceBtn.classList.remove('text-slate-500');
+                theoryBtn.classList.remove('active-tab');
+                theoryBtn.classList.add('text-slate-500');
+            }
+        }
+
+        // Question Count Selection UI
+        function setQuestionCount(count) {
+            selectedTotalQuestions = count;
+            document.querySelectorAll('.q-cnt-btn').forEach(btn => {
+                if (parseInt(btn.dataset.cnt) === count) {
+                    btn.classList.add('border-indigo-600', 'bg-indigo-50', 'text-indigo-700');
+                } else {
+                    btn.classList.remove('border-indigo-600', 'bg-indigo-50', 'text-indigo-700');
+                }
+            });
+        }
+
+        // Start Quiz
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            document.getElementById('quiz-setup').classList.add('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-play').classList.remove('hidden');
+
+            nextQuestion();
+        }
+
+        // Generate Next Question
+        function nextQuestion() {
+            if (currentQuestionIndex >= selectedTotalQuestions) {
+                showFinalResult();
+                return;
+            }
+
+            isAnswerSubmitted = false;
+            currentQuestionIndex++;
+            updateStatusBar();
+            hideFeedback();
+
+            // Randomly choose question type: 50% measurement, 50% part name
+            const isMeasurement = Math.random() < 0.5;
+
+            if (isMeasurement) {
+                setupMeasurementQuestion();
+            } else {
+                setupPartNameQuestion();
+            }
+        }
+
+        function updateStatusBar() {
+            document.getElementById('question-progress').innerText = `문제 ${currentQuestionIndex} / ${selectedTotalQuestions}`;
+            document.getElementById('score-counter').innerText = `점수: ${score}점`;
+        }
+
+        // Type 1 Setup: Measurement Question
+        function setupMeasurementQuestion() {
+            const randomVal = (Math.floor(Math.random() * 1500) / 100); // 0.00 ~ 15.00mm
+            currentQuestion = {
+                type: 'measurement',
+                val: randomVal
+            };
+
+            document.getElementById('question-title').innerText = "눈금을 읽고 정확한 측정값을 입력하세요";
+            document.getElementById('input-type-measurement').classList.remove('hidden');
+            document.getElementById('input-type-partname').classList.add('hidden');
+            
+            const inputEl = document.getElementById('user-measurement-input');
+            inputEl.value = '';
+            inputEl.focus();
+
+            drawMicrometer(randomVal, null);
+        }
+
+        // Type 2 Setup: Part Name Question
+        function setupPartNameQuestion() {
+            const randomPart = PARTS_LIST[Math.floor(Math.random() * PARTS_LIST.length)];
+            currentQuestion = {
+                type: 'part',
+                part: randomPart
+            };
+
+            document.getElementById('question-title').innerText = "빨간색 화살표가 가리키는 부품의 이름은 무엇일까요?";
+            document.getElementById('input-type-measurement').classList.add('hidden');
+            
+            const partContainer = document.getElementById('input-type-partname');
+            partContainer.classList.remove('hidden');
+            partContainer.innerHTML = '';
+
+            // Generate 4 Multiple-Choice Options (including correct answer)
+            let choices = [randomPart];
+            while (choices.length < 4) {
+                let other = PARTS_LIST[Math.floor(Math.random() * PARTS_LIST.length)];
+                if (!choices.some(c => c.key === other.key)) {
+                    choices.push(other);
+                }
+            }
+            // Shuffle choices
+            choices.sort(() => Math.random() - 0.5);
+
+            choices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.className = "w-full py-3 bg-slate-100 hover:bg-indigo-50 border border-slate-300 hover:border-indigo-400 font-bold text-slate-800 rounded-lg transition text-sm";
+                btn.innerText = choice.name;
+                btn.onclick = () => checkPartAnswer(choice.key);
+                partContainer.appendChild(btn);
+            });
+
+            // Draw micrometer with fixed position and highlight arrow
+            drawMicrometer(5.25, randomPart.key);
+        }
+
+        // Check Answer: Measurement
+        function checkMeasurementAnswer() {
+            if (isAnswerSubmitted) return;
+
+            const inputEl = document.getElementById('user-measurement-input');
+            const userVal = parseFloat(inputEl.value);
+
+            if (isNaN(userVal)) {
+                alert("숫자 형식의 측정값을 입력해주세요!");
+                return;
+            }
+
+            isAnswerSubmitted = true;
+            const isCorrect = Math.abs(userVal - currentQuestion.val) < 0.005;
+
+            handleAnswerResult(isCorrect, `정답: ${currentQuestion.val.toFixed(2)} mm`);
+        }
+
+        // Check Answer: Part Name
+        function checkPartAnswer(selectedKey) {
+            if (isAnswerSubmitted) return;
+
+            isAnswerSubmitted = true;
+            const isCorrect = selectedKey === currentQuestion.part.key;
+
+            handleAnswerResult(isCorrect, `정답: ${currentQuestion.part.name}`);
+        }
+
+        // Handle Correct/Incorrect Feedback & Auto Advance
+        function handleAnswerResult(isCorrect, extraInfo) {
+            const feedbackEl = document.getElementById('feedback-msg');
+            feedbackEl.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800');
+
+            if (isCorrect) {
+                score++;
+                updateStatusBar();
+                feedbackEl.classList.add('bg-emerald-100', 'text-emerald-800');
+                feedbackEl.innerText = "🎉 정답입니다! 다음 문제로 이동합니다...";
+
+                // Instantly advance after 0.8s when correct
+                setTimeout(() => {
+                    nextQuestion();
+                }, 800);
+            } else {
+                feedbackEl.classList.add('bg-rose-100', 'text-rose-800');
+                feedbackEl.innerText = `❌ 오답입니다. (${extraInfo})`;
+
+                // Advance after 1.8s when wrong so user can see correct answer
+                setTimeout(() => {
+                    nextQuestion();
+                }, 1800);
+            }
+        }
+
+        function hideFeedback() {
+            document.getElementById('feedback-msg').classList.add('hidden');
+        }
+
+        // Show Final Result Screen
+        function showFinalResult() {
+            document.getElementById('quiz-play').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+
+            document.getElementById('final-score').innerText = `${score} / ${selectedTotalQuestions}`;
+            const accuracy = Math.round((score / selectedTotalQuestions) * 100);
+            document.getElementById('final-accuracy').innerText = `정답률: ${accuracy}%`;
+        }
+
+        function resetQuizSetup() {
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-setup').classList.remove('hidden');
+        }
+
+        // Draw Canvas (Supports Value Rendering & Highlight Arrow)
+        function drawMicrometer(val, highlightPart) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const sleeveVal = Math.floor(val);
+            const hasHalf = (val - sleeveVal) >= 0.5;
+            const thimbleVal = Math.round(((val - sleeveVal - (hasHalf ? 0.5 : 0)) * 100)) % 50;
+
+            const startX = 60;
+            const centerY = 140;
+            const pxPerMM = 16;
+
+            // Background
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Frame (U-Shape Frame on Left)
+            ctx.fillStyle = '#334155';
+            ctx.beginPath();
+            ctx.arc(startX - 20, centerY + 20, 50, 0.2 * Math.PI, 0.9 * Math.PI);
+            ctx.lineWidth = 22;
+            ctx.strokeStyle = '#475569';
+            ctx.stroke();
+
+            // 2. Anvil
+            ctx.fillStyle = '#cbd5e1';
+            ctx.fillRect(startX - 35, centerY - 12, 15, 24);
+
+            // 3. Spindle
+            ctx.fillStyle = '#e2e8f0';
+            ctx.fillRect(startX - 10, centerY - 10, 50, 20);
+
+            // 4. Sleeve Body
+            const sleeveWidth = 280;
+            const sleeveHeight = 90;
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillRect(startX + 40, centerY - sleeveHeight/2, sleeveWidth, sleeveHeight);
+
+            // Datum Line
+            ctx.beginPath();
+            ctx.moveTo(startX + 40, centerY);
+            ctx.lineTo(startX + 40 + sleeveWidth, centerY);
+            ctx.strokeStyle = '#0284c7';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Sleeve Ticks
+            ctx.fillStyle = '#0f172a';
+            ctx.strokeStyle = '#0f172a';
+            ctx.font = '11px sans-serif';
+            ctx.textAlign = 'center';
+
+            const minVisibleMM = Math.max(0, Math.floor(val) - 8);
+            for (let i = minVisibleMM; i <= minVisibleMM + 16; i++) {
+                let x = startX + 70 + (i - minVisibleMM) * pxPerMM;
+                if (x < startX + 40 + sleeveWidth - 20) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, centerY);
+                    ctx.lineTo(x, centerY - 16);
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+
+                    if (i % 5 === 0) ctx.fillText(i, x, centerY - 22);
+
+                    let xHalf = x + pxPerMM / 2;
+                    if (xHalf < startX + 40 + sleeveWidth - 20) {
+                        ctx.beginPath();
+                        ctx.moveTo(xHalf, centerY);
+                        ctx.lineTo(xHalf, centerY + 16);
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Thimble Position
+            const thimbleX = startX + 70 + (val - minVisibleMM) * pxPerMM;
+            const thimbleWidth = 150;
+            const thimbleHeight = 130;
+
+            // 5. Thimble Body
+            let gradient = ctx.createLinearGradient(thimbleX, 0, thimbleX + thimbleWidth, 0);
+            gradient.addColorStop(0, '#cbd5e1');
+            gradient.addColorStop(0.3, '#f1f5f9');
+            gradient.addColorStop(0.8, '#94a3b8');
+            gradient.addColorStop(1, '#64748b');
+
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.moveTo(thimbleX, centerY - thimbleHeight/2 + 10);
+            ctx.lineTo(thimbleX + 20, centerY - thimbleHeight/2);
+            ctx.lineTo(thimbleX + thimbleWidth, centerY - thimbleHeight/2);
+            ctx.lineTo(thimbleX + thimbleWidth, centerY + thimbleHeight/2);
+            ctx.lineTo(thimbleX + 20, centerY + thimbleHeight/2);
+            ctx.lineTo(thimbleX, centerY + thimbleHeight/2 - 10);
+            ctx.closePath();
+            ctx.fill();
+            ctx.strokeStyle = '#334155';
+            ctx.stroke();
+
+            // 6. Thimble Scale Ticks
+            const tickSpacingY = 7.5;
+            for (let t = -9; t <= 9; t++) {
+                let tickNum = (thimbleVal + t + 50) % 50;
+                let y = centerY - (t * tickSpacingY);
+
+                if (y > centerY - thimbleHeight/2 + 12 && y < centerY + thimbleHeight/2 - 12) {
+                    ctx.beginPath();
+                    ctx.moveTo(thimbleX, y);
+                    let lineLen = (tickNum % 5 === 0) ? 22 : 10;
+                    ctx.lineTo(thimbleX + lineLen, y);
+                    ctx.lineWidth = (tickNum % 5 === 0) ? 1.5 : 1;
+                    ctx.stroke();
+
+                    if (tickNum % 5 === 0) {
+                        ctx.fillText(tickNum.toString().padStart(2, '0'), thimbleX + 26, y + 4);
+                    }
+                }
+            }
+
+            // 7. Ratchet Stop
+            const ratchetX = thimbleX + thimbleWidth;
+            ctx.fillStyle = '#475569';
+            ctx.fillRect(ratchetX, centerY - 25, 45, 50);
+
+            // Draw Target Highlight Arrow if part question
+            if (highlightPart) {
+                let targetX = 0, targetY = 0;
+
+                switch (highlightPart) {
+                    case 'anvil':
+                        targetX = startX - 28; targetY = centerY - 25; break;
+                    case 'spindle':
+                        targetX = startX + 15; targetY = centerY - 25; break;
+                    case 'frame':
+                        targetX = startX - 25; targetY = centerY + 65; break;
+                    case 'sleeve':
+                        targetX = startX + 130; targetY = centerY - 55; break;
+                    case 'thimble':
+                        targetX = thimbleX + 60; targetY = centerY - 75; break;
+                    case 'ratchet':
+                        targetX = ratchetX + 22; targetY = centerY - 38; break;
+                }
+
+                drawHighlightArrow(targetX, targetY);
+            }
+        }
+
+        // Helper: Draw Red Arrow pointing at part
+        function drawHighlightArrow(x, y) {
+            ctx.save();
+            ctx.fillStyle = '#ef4444';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+
+            // Draw Arrow Head
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x - 12, y - 25);
+            ctx.lineTo(x - 4, y - 25);
+            ctx.lineTo(x - 4, y - 45);
+            ctx.lineTo(x + 4, y - 45);
+            ctx.lineTo(x + 4, y - 25);
+            ctx.lineTo(x + 12, y - 25);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        // Keyboard Enter Listener for measurement input
+        document.getElementById('user-measurement-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkMeasurementAnswer();
+            }
+        });
+    </script>
+</body>
+</html>
